@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+        backend: 
+                image: jose-bolanos/server
+                ports: 
+                - "5000:5000"
+        client:
+                image: jose-bolanos/client
+                ports:
+                - "3000:3000"

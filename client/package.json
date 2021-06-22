@@ -1,0 +1,21 @@
+{
+  "name": "fit-exercise-cliente",
+  "version": "1.0.0",
+  "description": "Client side service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon app.js"
+
+  },
+  "author": "Jose Juan Bolaños",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "nodemon": "^2.0.7",
+    "winston": "^3.3.3"
+  }
+}
