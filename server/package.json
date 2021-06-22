@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles --verbose",
     "dev": "npx nodemon app.js",
+    "start": "node app.js",
     "init-db": "node database/migrations/createSchema.js"
   },
   "keywords": [
