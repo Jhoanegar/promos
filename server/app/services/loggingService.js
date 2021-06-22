@@ -17,5 +17,9 @@
    ],
  });
  
+ /**
+  * Congratulations for worrying about proper logging! Don't commit the logs to
+  * git though!
+  */
  module.exports = { errorLogger };
  

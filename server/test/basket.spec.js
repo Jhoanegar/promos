@@ -9,7 +9,20 @@ const {
 
 let basket;
 
+/**
+ * Testing is HARD because there are so many ways in which things could go wrong
+ * and this test suite is barely scratching the surface. Thinks of tests like 
+ * the actual documentation of the code. All the behaviour and all the business rules
+ * should be represented here by one or more tests. I don't quite see that here.
+ * You may want to look at npm's module supertest. It could help a lot to test
+ * behaviours on an API context. Also it's not a good idea to interact with a database
+ * on a testing suite
+ */
 describe("BasketService", () => {
+  /**
+   * I prefer the it <verb> syntax. It avoids duplication (the word should) and leads
+   * to better test reporter messages. This standard is encouraged by Jest folks
+   */
   test("Should create a basket", async () => {
     basket = await addBasket();
     expect(basket.success).toBe(true);
@@ -41,14 +54,23 @@ describe("BasketService", () => {
     expect(result).toBe(true);
   });
 
+  /**
+   * Look into 4 Phase testing http://xunitpatterns.com/Four%20Phase%20Test.html
+   * or https://thoughtbot.com/blog/four-phase-test
+   * Also called arrange, act, assert: http://wiki.c2.com/?ArrangeActAssert
+   * Look how adding three simple new lines helps so much to the readability of the
+   * tests.
+   */
   test('Should calculate promos regarding to NodeJSExercise P1', async () => {
     const pen = { code: "PEN", quantity: 1 };
     const tShirt = { code: "TSHIRT", quantity: 1 };
     const mug = { code: "MUG", quantity: 1 };
     const newBasket = await addBasket();
+
     await addBasketProduct(newBasket.basket.id, pen.code, pen.quantity);
     await addBasketProduct(newBasket.basket.id, tShirt.code, tShirt.quantity);
     await addBasketProduct(newBasket.basket.id, mug.code, mug.quantity);
+
     const result = await getDetails(newBasket.basket.id);
     expect(result.total).toBe(32.5);
   });

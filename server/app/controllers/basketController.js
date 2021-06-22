@@ -14,6 +14,13 @@ const {
  */
 const createBasket = async (req, res) => {
   const result = await addBasket();
+  /**
+   * This is exactly why Exceptions exists. While I'm not 100% oppposed to this
+   * style of handling errors, I see no way where this application is going to 
+   * recover from an unexpected error. At the very least you are missing a try-catch
+   * block around this entire handler. But again, catching/handling/re-throwing 
+   * an exception is how I've seen this being approched the most.
+   */
   if (result.success) {
     res.json({
       success: true,
@@ -21,6 +28,11 @@ const createBasket = async (req, res) => {
       message: "Basket saved successfully.",
     });
   } else {
+    /**
+     * So in this case we are returning a status code 200 for an unsuccessful
+     * operation. That doesn't sound like good API design.
+     * Exceptions should have 4XX or 5xx status codes with appropriate messages
+     */
     res.json({
       success: false,
       error: "Basket could not be saved.",

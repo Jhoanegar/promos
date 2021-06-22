@@ -15,12 +15,22 @@ const { promo2x1, promo3plus } = require("./promoService");
  */
 const addBasket = async () => {
   try {
+    /**
+     * You should delegate the creation of the ids to the database. 
+     * Postgres has an uuid extension that could help you to accomplish this.
+     * You should also enforce default values (enabled) to the actual model instead
+     * of relying on the controller for this.
+     */
     const basket = await Basket.create({ id: v4(), enabled: true });
     return {
       success: true,
       basket,
     };
   } catch (error) {
+    /**
+     * Duplicated code is duplicated! (and the source of all evil)
+     * This could've been a shared helper
+     */
     errorLogger.error({
       error: error.message,
       stack: error.stack,
@@ -65,6 +75,11 @@ const addBasketProduct = async (basketId, productCode, quantity) => {
  * also calculates on the fly the promotion for included products
  */
 const getDetails = async (basketId) => {
+  /**
+   * Wow this function is doing a LOT!, it could've benefited from breaking it
+   * down into multiple smaller functions which then can be tested separately
+   * Look into multi level abstraction refactoring techniques 
+ */
   try {
     // Eager loading to tet Basket, Basket Products, Products At the same time
     const basket = await Basket.findOne({
@@ -87,7 +102,7 @@ const getDetails = async (basketId) => {
     });
     let flatResults = [];
     let totalSum = 0;
-
+    
     if (basket) {
       flatResults = basket.BasketProducts.map((basketProduct) => {
         let total, hasPromo;
@@ -141,6 +156,10 @@ const disableBasket = async (basketId) => {
   try {
     const basket = await Basket.findOne(whereClause);
     if (basket) {
+      /**
+       * I'm 200% sure Sequelize has this feature baked in. I think it's called
+       * `paranoid: true` on the model definition. No need to reinvent the wheel here!
+       */
       await Basket.update({ enabled: false }, whereClause);
       return true;
     }

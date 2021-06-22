@@ -20,4 +20,11 @@ const promo3plus = (quantity, unitPrice) => {
   return total - discount;
 };
 
+/**
+ * What if we had 100s of promotions? Would this file keep getting bigger & bigger?
+ * If I want to add a different set of parameters for the same promotion I would have
+ * to deploy the entire application again and create new fn? This code _works_ but it's not reusable
+ * or scalable in any way which are two of the core principles in NodeJS.
+ * 
+ */
 module.exports = {promo2x1, promo3plus}

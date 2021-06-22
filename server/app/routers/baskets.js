@@ -15,4 +15,7 @@ basketRouter.get("/:basketId", getBasketDetails);
 // Delete basket
 basketRouter.delete("/:basketId", deleteBasket);
 
+/**
+ * Beautiful RESTful API design!
+ */
 module.exports = basketRouter;
